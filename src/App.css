@@ -312,10 +312,15 @@ header {
 /* GRID & CARDS */
 .amazon-grid-layout {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   padding: 25px 5%;
   width: 100%;
+}
+
+/* Every 5th card (1-based: positions 5, 10, 15…) spans full width */
+.amazon-grid-layout .card-full {
+  grid-column: 1 / -1;
 }
 
 @media (max-width: 600px) {
@@ -327,6 +332,7 @@ header {
   .cart-trigger { padding: 10px 14px; font-size: 12px; }
   .nav-wrapper { top: 60px; }
   .amazon-grid-layout { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 15px 10px; }
+  .amazon-grid-layout .card-full { grid-column: 1 / -1; }
   .card { padding: 12px; border-radius: 18px; }
   .img-box { height: 130px; }
 }

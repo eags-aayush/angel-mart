@@ -189,9 +189,11 @@ export default function StoreSection({
 
       <div className="amazon-grid-layout">
         {renderedItems.map((item, idx) => {
+          const isFull = (idx + 1) % 5 === 0
+          const cardClass = `card${isFull ? ' card-full' : ''}`
           if (item._type === 'category') {
             return (
-              <div key={item.cat} className="card" onClick={() => filterByCat(item.cat)}>
+              <div key={item.cat} className={cardClass} onClick={() => filterByCat(item.cat)}>
                 <div className="img-box">
                   <img
                     src={`assets/${item.cat}.png`}
@@ -207,7 +209,7 @@ export default function StoreSection({
           const qty = cart[p.Product_Name] || 0
           const imgName = p.Product_Name.replace(/\//g, '_')
           return (
-            <div key={p.Product_Name + idx} className="card">
+            <div key={p.Product_Name + idx} className={cardClass}>
               <div className="img-box">
                 <img
                   src={`assets/${imgName}.png`}
