@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<!--
+  ANGEL MART — EmailJS Order Confirmation Template
+  ─────────────────────────────────────────────────
+  Paste this entire HTML into:
+    EmailJS → Email Templates → [Your Template] → Content tab → switch to "HTML editor"
+
+  Variables used (mapped from CheckoutPage.jsx):
+    {{order_id}}          – auto-generated order number
+    {{customer_name}}     – buyer's name
+    {{phone}}             – buyer's phone
+    {{email}}             – buyer's email (auto from Firebase)
+    {{#orders}}           – loop start
+      {{name}}            – product name
+      {{image_url}}       – product image URL
+      {{units}}           – quantity
+      {{price}}           – line total (e.g. $9.99)
+    {{/orders}}           – loop end
+    {{cost.total}}        – grand total
+-->
+<div
+  style="
+    font-family: system-ui, sans-serif, Arial;
+    font-size: 14px;
+    color: #333;
+    padding: 14px 8px;
+    background-color: #f0f0f0;
+  "
+>
+  <!-- Card -->
+  <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+
+    <!-- Header bar -->
+    <div style="border-top: 6px solid #000000; padding: 20px 24px; display: flex; align-items: center;">
+      <span
+        style="
+          font-size: 18px;
+          font-weight: 900;
+          letter-spacing: 2px;
+          color: #000;
+          border-right: 1px solid #ccc;
+          padding-right: 14px;
+          margin-right: 14px;
+        "
+      >ANGEL MART</span>
+      <span style="font-size: 15px; color: #444; font-weight: 600;">
+        Order Confirmation
+      </span>
+    </div>
+
+    <!-- Body -->
+    <div style="padding: 0 24px 24px;">
+
+      <!-- Greeting -->
+      <p style="font-size: 15px; margin: 20px 0 4px;">Hi <strong>{{customer_name}}</strong>,</p>
+      <p style="color: #555; margin: 0 0 6px;">Thanks for your order! Here's a summary below.</p>
+      <p style="color: #555; margin: 0 0 20px;">We'll be in touch shortly. 📦</p>
+
+      <!-- Order meta -->
+      <div
+        style="
+          background: #f7f7f7;
+          border-radius: 8px;
+          padding: 12px 16px;
+          margin-bottom: 20px;
+          font-size: 13px;
+        "
+      >
+        <span style="margin-right: 24px;"><strong>Order:</strong> {{order_id}}</span>
+        <span style="margin-right: 24px;"><strong>Phone:</strong> {{phone}}</span>
+        <span><strong>Email:</strong> {{email}}</span>
+        <div style="margin-top: 8px;"><strong>Address:</strong> {{address}}</div>
+      </div>
+
+      <!-- Divider heading -->
+      <div
+        style="
+          font-size: 13px;
+          font-weight: 900;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          padding-bottom: 10px;
+          border-bottom: 2px solid #000;
+          margin-bottom: 0;
+        "
+      >
+        Items Ordered
+      </div>
+
+      <!-- Items loop -->
+      {{#orders}}
+      <table style="width: 100%; border-collapse: collapse; border-bottom: 1px solid #eee;">
+        <tr style="vertical-align: middle;">
+          <td style="padding: 16px 8px 16px 0; width: 72px;">
+            <img
+              style="height: 64px; width: 64px; object-fit: contain; border-radius: 8px; border: 1px solid #eee; background: #fafafa; display: block;"
+              height="64"
+              width="64"
+              src="{{image_url}}"
+              alt="{{name}}"
+            />
+          </td>
+          <td style="padding: 16px 8px; width: 100%; vertical-align: middle;">
+            <div style="font-weight: 700; font-size: 14px;">{{name}}</div>
+            <div style="font-size: 12px; color: #888; margin-top: 4px;">Qty: {{units}}</div>
+          </td>
+          <td style="padding: 16px 0 16px 8px; text-align: right; white-space: nowrap; vertical-align: middle;">
+            <strong style="font-size: 15px;">{{price}}</strong>
+          </td>
+        </tr>
+      </table>
+      {{/orders}}
+
+      <!-- Totals -->
+      <table style="border-collapse: collapse; width: 100%; margin-top: 8px;">
+        <tr>
+          <td style="width: 55%;"></td>
+          <td style="padding: 8px 8px 4px; font-size: 13px; color: #777;">Delivery</td>
+          <td style="padding: 8px 0 4px; text-align: right; font-size: 13px; color: #777; white-space: nowrap;">Calculated at door</td>
+        </tr>
+        <tr>
+          <td style="width: 55%;"></td>
+          <td
+            style="
+              padding: 16px 8px;
+              border-top: 2px solid #000;
+              font-weight: 900;
+              font-size: 15px;
+              letter-spacing: 0.5px;
+            "
+          >ORDER TOTAL</td>
+          <td
+            style="
+              padding: 16px 0;
+              border-top: 2px solid #000;
+              text-align: right;
+              font-weight: 900;
+              font-size: 18px;
+              white-space: nowrap;
+            "
+          >{{cost.total}}</td>
+        </tr>
+      </table>
+
+    </div>
+
+    <!-- Footer bar -->
+    <div
+      style="
+        background: #000;
+        padding: 18px 24px;
+        text-align: center;
+      "
+    >
+      <p style="color: #fff; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin: 0;">
+        A PROTOTYPE · NOTZIE STUDIOS
+      </p>
+    </div>
+  </div>
+
+  <!-- Disclaimer -->
+  <div style="max-width: 600px; margin: 14px auto 0;">
+    <p style="color: #aaa; font-size: 11px; text-align: center; line-height: 1.6;">
+      This email was sent to {{email}}<br />
+      You received this because you placed an order at Angel Mart.
+    </p>
+  </div>
+</div>
