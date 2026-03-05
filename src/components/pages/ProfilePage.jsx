@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
+import { useApp } from '../../context/useApp'
 
-export default function ProfileSection({ currentUser, userData, onBack, onLogout, onSave }) {
-  const [name, setName] = useState('')
+export default function ProfilePage() {
+  const { currentUser, userData, saveProfile, logout, goOverlay } = useApp()
+  const [name, setName]       = useState('')
   const [address, setAddress] = useState('')
-  const [photo, setPhoto] = useState('assets/logo.png')
+  const [photo, setPhoto]     = useState('assets/logo.png')
 
   useEffect(() => {
     if (userData) {
@@ -18,13 +20,13 @@ export default function ProfileSection({ currentUser, userData, onBack, onLogout
     const reader = new FileReader()
     reader.onload = e => {
       setPhoto(e.target.result)
-      onSave({ photo: e.target.result })
+      saveProfile({ photo: e.target.result })
     }
     reader.readAsDataURL(file)
   }
 
-  const saveChanges = () => {
-    onSave({ name, address, photo })
+  const save = () => {
+    saveProfile({ name, address, photo })
     alert('Profile updated!')
   }
 
@@ -32,17 +34,18 @@ export default function ProfileSection({ currentUser, userData, onBack, onLogout
     <div className="profile-logs-section">
       <div style={{ maxWidth: 500, width: '100%' }}>
         <div
-          onClick={onBack}
-          style={{ cursor: 'pointer', fontWeight: 900, marginBottom: 20, display: 'inline-block', fontSize: 12 }}
+          className="back-link"
+          onClick={() => goOverlay('none')}
         >
-          ← BACK TO STORE
+          ← Back to Store
         </div>
+
         <div className="profile-card-beast">
           <div style={{ textAlign: 'center', marginBottom: 30 }}>
             <div style={{ position: 'relative', display: 'inline-block' }}>
               <img src={photo} className="p-img-large" alt="profile" />
               <label className="p-edit-btn">
-                📸{' '}
+                📸
                 <input
                   type="file"
                   accept="image/*"
@@ -51,53 +54,33 @@ export default function ProfileSection({ currentUser, userData, onBack, onLogout
                 />
               </label>
             </div>
-            <h2 style={{ marginTop: 15, fontWeight: 900, letterSpacing: 1 }}>MY NEURAL PROFILE</h2>
+            <h2 style={{ marginTop: 15, fontWeight: 900, letterSpacing: 1 }}>MY PROFILE</h2>
           </div>
 
           <div className="log-input-group">
-            <label className="log-label">IDENTIFIER NAME</label>
-            <input
-              type="text"
-              className="log-field"
-              value={name}
-              onChange={e => setName(e.target.value)}
-            />
+            <label className="log-label">FULL NAME</label>
+            <input type="text" className="log-field" value={name} onChange={e => setName(e.target.value)} />
           </div>
 
           <div className="log-input-group">
-            <label className="log-label">NEURAL MAIL SYSTEM</label>
-            <input
-              type="text"
-              className="log-field"
-              value={currentUser?.email || ''}
-              disabled
-              style={{ opacity: 0.6 }}
-            />
+            <label className="log-label">EMAIL</label>
+            <input type="text" className="log-field" value={currentUser?.email || ''} disabled style={{ opacity: 0.6 }} />
           </div>
 
           <div className="log-input-group">
-            <label className="log-label">SYNC COORDINATES</label>
-            <textarea
-              className="log-field"
-              rows={2}
-              value={address}
-              onChange={e => setAddress(e.target.value)}
-            />
+            <label className="log-label">DELIVERY ADDRESS</label>
+            <textarea className="log-field" rows={2} value={address} onChange={e => setAddress(e.target.value)} />
           </div>
 
-          <button
-            className="login-btn"
-            style={{ width: '100%', marginTop: 30, padding: 18 }}
-            onClick={saveChanges}
-          >
-            SAVE UPDATED LOGS
+          <button className="login-btn" style={{ width: '100%', marginTop: 30, padding: 18 }} onClick={save}>
+            SAVE CHANGES
           </button>
           <button
             className="login-btn"
             style={{ width: '100%', background: '#ff4444', color: '#fff', marginTop: 15, padding: 15, fontSize: 12 }}
-            onClick={onLogout}
+            onClick={logout}
           >
-            TERMINATE SESSION
+            SIGN OUT
           </button>
         </div>
       </div>
